@@ -3,11 +3,12 @@ module.exports = {
     "node": true,
     "browser": true,
     "es6": true,
-    "jest/globals": true
+    "jest/globals": true,
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:cypress/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -46,5 +47,5 @@ module.exports = {
     ],
     "no-console": 0,
     "react/prop-types": 0,
-  }
+  },
 }
