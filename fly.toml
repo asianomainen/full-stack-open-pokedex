@@ -21,7 +21,6 @@ kill_timeout = 5
   internal_port = 8080
   processes = ["app"]
   protocol = "tcp"
-  script_checks = []
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
@@ -43,7 +42,7 @@ kill_timeout = 5
     timeout = "2s"
 
   [[services.http_checks]]
-    interval = 60000
+    interval = 10000
     grace_period = "5s"
     method = "get"
     path = "/health"
@@ -51,3 +50,10 @@ kill_timeout = 5
     restart_limit = 0
     timeout = 2000
     tls_skip_verify = false
+
+  [[services.script_checks]]
+    command       = "/app/health_check.sh"
+    grace_period  = "10s"
+    interval      = "10s"
+    restart_limit = 0
+    timeout       = "10s"
