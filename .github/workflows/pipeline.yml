@@ -49,7 +49,7 @@ jobs:
         if: ${{ failure() }}
         with:
           severity: error
-          description: commit https://github.com/${{github.repository}}/commit/${{github.sha}}/checks/${{github.run_id}} by ${{ github.actor }} broke the build :(
+          description: commit https://github.com/${{github.repository}}/commit/${{github.sha}}/checks/${{github.run_id}} by ${{ github.actor }} broke the build
           text: Build failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
