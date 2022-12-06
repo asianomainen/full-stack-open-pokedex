@@ -13,7 +13,7 @@ env:
 
 jobs:
   simple_deployment_pipeline:
-    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -38,7 +38,7 @@ jobs:
       - run: flyctl deploy --remote-only
       - name: Deployment Success
         uses: rjstone/discord-webhook-notify@v1
-        if: ${{ success() github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
+        if: ${{ success() }}
         with:
           severity: info
           description: to https://pokedexx.fly.dev/ by ${{ github.actor }}
@@ -53,7 +53,7 @@ jobs:
           text: Build failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
-    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
+    if: ${{ github.event_name == 'push' }}
     needs: [ simple_deployment_pipeline ]
     runs-on: ubuntu-20.04
     steps:
