@@ -28,6 +28,10 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
+      - name: commit message
+        env:
+          MESSAGE: ${{ github.event.head_commit.message }}
+        run: echo "$MESSAGE"
   runs_only_with_skip:
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-20.04
