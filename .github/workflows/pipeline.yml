@@ -36,22 +36,6 @@ jobs:
           wait-on: http://localhost:5000
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
-      - name: Deployment Success
-        uses: rjstone/discord-webhook-notify@v1
-        if: ${{ success() github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
-        with:
-          severity: info
-          description: to https://pokedexx.fly.dev/ by ${{ github.actor }}
-          text: A new version of pokedex was successfully deployed!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Deployment Failure
-        uses: rjstone/discord-webhook-notify@v1
-        if: ${{ failure() }}
-        with:
-          severity: error
-          description: commit https://github.com/${{github.repository}}/commit/${{github.sha}}/checks/${{github.run_id}} by ${{ github.actor }} broke the build
-          text: Build failed
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     if: ${{ github.event_name == 'push' }}
     needs: [ simple_deployment_pipeline ]
