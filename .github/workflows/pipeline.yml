@@ -28,19 +28,13 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
-      - name: commit message
-        env:
-          MESSAGE: ${{ github.event.head_commit.message }}
-        run: echo "$MESSAGE"
   runs_only_with_skip:
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip')}}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: github context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        run: echo "I DID IT"
   simple_deployment_pipeline:
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-20.04
